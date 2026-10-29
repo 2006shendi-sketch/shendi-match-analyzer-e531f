@@ -14,7 +14,7 @@ exports.handler = async (event) => {
     if (!body.image || typeof body.image !== "string") return { statusCode: 400, headers, body: JSON.stringify({ error: "اختَر صورة أولاً." }) };
     const mimeType = ["image/jpeg","image/png","image/webp","image/heic","image/heif"].includes(body.mimeType) ? body.mimeType : "image/jpeg";
     const prompt = "أنت محلل كرة قدم. حلل صورة المباراة المرفقة باللغة العربية. المستخدم يريد رفع الصورة فقط ولا يدخل أي بيانات يدوياً. استخرج أسماء الفريقين والإحصائيات الظاهرة في الصورة فقط. لا تخترع الأرقام ولا تستنتج أن الصورة تحتوي معلومات غير ظاهرة. إذا لم تتوفر موثوقاً أهداف كل فريق في آخر خمس مباريات أو الأهداف المستقبلة أو الملعب أو نوع المباراة، اكتب (غير متوفرة) واترك القيمة فارغة. اذكر ما يمكن استخراجه من الصورة، نقاط القوة والضعف المستندة إلى الأرقام الظاهرة، ثم توقعاً حذراً للنتيجة واحتمالات الفوز/التعادل/الخسارة فقط إذا كانت البيانات كافية. ميّز بوضوح بين الأرقام الظاهرة والتوقعات، ولا تقدم التوقع كضمان. إذا كانت الصورة لا تخص مباراة كرة قدم، وضح ذلك.";
-    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + encodeURIComponent(apiKey), {
+    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=" + encodeURIComponent(apiKey), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
