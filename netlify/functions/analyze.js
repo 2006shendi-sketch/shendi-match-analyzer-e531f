@@ -23,11 +23,11 @@ exports.handler = async (event) => {
       })
     });
     const data = await response.json();
-    if (!response.ok) return { statusCode: 502, headers, body: JSON.stringify({ error: data?.error?.message || "فشل الاتصال بنموذج التحليل." }) };
+    if (!response.ok) return { statusCode: 502, headers, body: JSON.stringify({ error: data?.error?.message || ("Gemini API returned HTTP " + response.status) }) };
     const text = (data.candidates || []).flatMap(c => c.content?.parts || []).map(p => p.text || "").join("\n").trim();
     if (!text) return { statusCode: 502, headers, body: JSON.stringify({ error: "لم يرجع النموذج تحليلاً. جرب صورة أوضح." }) };
     return { statusCode: 200, headers, body: JSON.stringify({ text }) };
   } catch (error) {
-    return { statusCode: 500, headers, body: JSON.stringify({ error: "حدث خطأ أثناء تحليل الصورة." }) };
+    return { statusCode: 500, headers, body: JSON.stringify({ error: error?.message || "حدث خطأ أثناء تحليل الصورة." }) };
   }
 };
