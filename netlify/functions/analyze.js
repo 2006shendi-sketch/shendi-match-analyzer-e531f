@@ -19,7 +19,7 @@ exports.handler = async (event) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }, { inline_data: { mime_type: mimeType, data: body.image } }] }],
-        generationConfig: { temperature: 0.2, maxOutputTokens: 1800 }
+        generationConfig: { maxOutputTokens: 1800 }
       })
     });
     const data = await response.json();
