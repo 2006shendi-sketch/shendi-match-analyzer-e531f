@@ -7,8 +7,8 @@ exports.handler = async (event) => {
   };
   if (event.httpMethod === "OPTIONS") return { statusCode: 204, headers, body: "" };
   if (event.httpMethod !== "POST") return { statusCode: 405, headers, body: JSON.stringify({ error: "طريقة الطلب غير مدعومة." }) };
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return { statusCode: 500, headers, body: JSON.stringify({ error: "باقي إعداد واحد: أضف GEMINI_API_KEY في إعدادات Netlify مرة واحدة." }) };
+  const apiKey = process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY1;
+  if (!apiKey) return { statusCode: 500, headers, body: JSON.stringify({ error: "مفتاح Gemini غير ظاهر للدالة. في Netlify تأكد أن اسم المتغير GEMINI_API_KEY أو GEMINI_API_KEY1، وأنه مفعّل لكل سياقات النشر، ثم أعد النشر." }) };
   try {
     const body = JSON.parse(event.body || "{}");
     if (!body.image || typeof body.image !== "string") return { statusCode: 400, headers, body: JSON.stringify({ error: "اختَر صورة أولاً." }) };
